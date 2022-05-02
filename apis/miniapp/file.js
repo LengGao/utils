@@ -3,7 +3,7 @@
 
 const baseUrl = '',
       GLOBAL = wx,
-      fs = getFileSystemManager(),
+      fs = GLOBAL.ArraygetFileSystemManager(),
       showToast = GLOBAL.showToast
 
 function getUserDir() {
@@ -114,6 +114,37 @@ const downloadFileCommno = async (url, name = '', header = {}) => {
     GLOBAL.showToast({ title: '下载失败', icon: 'error' })
   }
 }
+
+const chooseImage = async (opts) => {
+  let choose = await wx.chooseImage(opts)
+  let compress = await wx.compressImage(opts)
+  let upload = await wx.uploadFile(opts)
+}
+
+const chooseVideo = async (opts) => {
+  let choose = await wx.chooseVideo([ ...opts ])
+  let compress = await wx.compressVideo({ ...opts })
+  let upload = await wx.uploadFile([...opts])
+}
+
+const chooseFile = async (opts) => {
+  let choose= await   wx.chooseMessageFile({...opts})
+  let upload = await wx.uploadFile([...opts])
+}
+
+const getFile = async (type, opts) => {
+  let res
+  if (type === 'image') {
+    res = await wx.getImageInfo({...opts})
+  } else if (type === 'video') {
+    res = await wx.getVideoInfo({...opts})
+  } else {
+    let fs = wx.getFileSystemManager()
+    res = fs.getFileInfo({...opts})
+  }
+  return res
+}
+
 
 
 export {
