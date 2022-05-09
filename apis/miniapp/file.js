@@ -15,7 +15,7 @@ function getUserDir() {
  * @param {*} returnValue
  * @returns 
  */
-const callResultAnalysis = (value) => {
+ export const callResultAnalysis = (value) => {
   let result = false
   if (Array.isArray(value)) {
     result = value.some(v => {
@@ -29,7 +29,7 @@ const callResultAnalysis = (value) => {
  * 获取文件名和后缀
  * @param {String} name
  */
-const getFilenameInfo = (name) => {
+ export const getFilenameInfo = (name) => {
 	const sepratorIndex = name.lastIndexOf('.')
 	return { name: name.substring(0, sepratorIndex), ext: name.substring(sepratorIndex) }
 }
@@ -39,7 +39,7 @@ const getFilenameInfo = (name) => {
  * @param {*} data 
  * @returns string
  */
-const base64ToString = (data) => {
+ export const base64ToString = (data) => {
   /** Convert Base64 data to a string */
   const charCodeAt = String.prototype.charCodeAt,
         toBinaryTable = [
@@ -70,7 +70,7 @@ const base64ToString = (data) => {
  * @param {*} str 
  * @returns base64
  */
-const stringToBase64 = (str) => {
+ export const stringToBase64 = (str) => {
   const charCodeAt = String.prototype.charCodeAt,
         toBase64Table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
         base64Pad = '='
@@ -105,7 +105,7 @@ const stringToBase64 = (str) => {
  * @param {*} name 文件名 考虑到data: ,blob: 链接没有后缀名等情况
  * @param {*} header 请求头配置
  */
-const downloadFileCommno = async (url, name = '', header = {}) => {
+ export const downloadFileCommno = async (url, name = '', header = {}) => {
   const types = 'doc, xls, ppt, pdf, docx, xlsx, pptx' // 支持类型
   const downloadMsg = await downloadFile({ url, header })
   if (downloadMsg.statusCode === 200) {
@@ -115,24 +115,24 @@ const downloadFileCommno = async (url, name = '', header = {}) => {
   }
 }
 
-const chooseImage = async (opts) => {
+export const chooseImage = async (opts) => {
   let choose = await wx.chooseImage(opts)
   let compress = await wx.compressImage(opts)
   let upload = await wx.uploadFile(opts)
 }
 
-const chooseVideo = async (opts) => {
+export const chooseVideo = async (opts) => {
   let choose = await wx.chooseVideo([ ...opts ])
   let compress = await wx.compressVideo({ ...opts })
   let upload = await wx.uploadFile([...opts])
 }
 
-const chooseFile = async (opts) => {
+export const chooseFile = async (opts) => {
   let choose= await   wx.chooseMessageFile({...opts})
   let upload = await wx.uploadFile([...opts])
 }
 
-const getFile = async (type, opts) => {
+export const getFile = async (type, opts) => {
   let res
   if (type === 'image') {
     res = await wx.getImageInfo({...opts})
@@ -145,11 +145,3 @@ const getFile = async (type, opts) => {
   return res
 }
 
-
-
-export {
-  stringToBase64,
-  base64ToString,
-  getFilenameInfo,
-
-}

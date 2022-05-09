@@ -13,7 +13,7 @@ if (!Promise.prototype.finally) {
  * @param {*} global 该i在了api的全局对象
  * @returns 结构对象
  */
-const getApiStyle = (global) => {
+ export const getApiStyle = (global) => {
   let promiseApi = [], callbackApi = []  
   for (let arr = Object.keys(global), i = arr.length - 1; i >= 0; i--) {    
     let key = arr[i], fn = global[key]
@@ -34,7 +34,7 @@ const getApiStyle = (global) => {
  * @param {*} stack 异步化方法名栈
  * @param {*} global 携带API的全局对象
  */
-const asynchronizationApis = (stack, global) => {  
+ export const asynchronizationApis = (stack, global) => {  
   for (let i = stack.length - 1; i >= 0; i--) {
     let fn = global[i]
     global[i] = async (args) => fn(args)
@@ -47,13 +47,7 @@ const asynchronizationApis = (stack, global) => {
  * @param {*} fn 函数
  * @returns Promise
  */
-const asynchronizationTry = async (fn) => {
+export const asynchronizationTry = async (fn) => {
   let args = [].slice.call(arguments, 1)
   return args.length ? fn.apply(this, args) : fn.call(this)
-}
-
-export {
-  getApiStyle,
-  asynchronizationApis,
-  asynchronizationTry
 }
